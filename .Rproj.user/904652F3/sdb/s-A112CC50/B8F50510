@@ -1,0 +1,18 @@
+{
+    "contents" : "elapsed_months <- function(end_date, start_date) {\n  \n  end_date <- as.Date(end_date)\n  start_date <- as.Date(start_date)\n  ed <- as.POSIXlt(end_date)\n  sd <- as.POSIXlt(start_date)\n  12 * (ed$year - sd$year) + (ed$mon - sd$mon)\n}\n\ngetFwdStructure <- function(x, y) {\n  if (x < y)\n  {\n    return (\"CTNG\")\n  }\n  return (\"BKWD\")  \n}\n\n\nmonthlyMeanSoFar <- function(p) {\n  refYearMon <- max(p$QDate)\n  #mean(p[as.yearmon(time(p)) == refYearMon])\n}\n\n\nn <- 10\nleader <- data.frame(\n  ccode = rep(LETTERS[1:3],each=n),\n  GI_delta = rnorm(3*n),\n  indd = c(1:(3*n))\n)\n\nddply(\n  leader, \"ccode\",\n  summarise,\n  dddd = rollmean( GI_delta, 3, align=\"right\", na.pad=F ),\n  newIdddd = rollmax( indd, 3, align=\"right\", na.pad=F )\n)\n\nhelp(ddply)\n",
+    "created" : 1456991636218.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2460005805",
+    "id" : "B8F50510",
+    "lastKnownWriteTime" : 1458295241,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/90_CommonUtilFunction.R",
+    "project_path" : "90_CommonUtilFunction.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

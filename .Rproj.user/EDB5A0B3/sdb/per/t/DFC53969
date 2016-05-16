@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1463105409385.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "DFC53969",
+    "lastKnownWriteTime" : 6,
+    "last_content_update" : -2147483648,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "1d5z84lmlq",
+        "caption" : "fwdHistory",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=fwdHistory&cache_key=1d5z84lmlq",
+        "displayedObservations" : 74097,
+        "environment" : "",
+        "object" : "fwdHistory",
+        "totalObservations" : 74097,
+        "variables" : 3
+    },
+    "relative_order" : 25,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "#historyPeriod.start <- as.Date(c('2015-08-04','2009-06-01'))\n#historyPeriod.end <- as.Date(c('2016-04-30','2011-03-30'))\n\nhistoryPeriod.start <- as.Date(c('2013-11-04','2009-06-07'))\nhistoryPeriod.end <- as.Date(c('2014-05-30','2011-03-30'))\n\n#historyPeriod.start <- as.Date(c('2009-06-05'))\n#historyPeriod.end <- as.Date(c('2011-03-30'))\n\n\nreferenceSimulationPeriod <- \n  data.frame( historyPeriod.start ,  historyPeriod.end)\n\n# print(drawFwdPrice(fwdStrBasicInfo,referenceSimulationPeriod$historyPeriod.start[2],referenceSimulationPeriod$historyPeriod.end[2]))\n print(drawContourCurve(fwdStrBasicInfo,referenceSimulationPeriod$historyPeriod.start[2],referenceSimulationPeriod$historyPeriod.end[2]))\n# print(drawFwdPrice(fwdStrBasicInfo.sim))\n\n# create first section of simulation data\nReferenceDate <- max(fwdStrBasicInfo$QDate)\nstartReferenceData <- fwdStrBasicInfo[fwdStrBasicInfo$QDate == ReferenceDate,]\nfwdStrBasicInfo.sim <- \n  createSimulationData(fwdStrBasicInfo,referenceSimulationPeriod$historyPeriod.start[1],\n                       referenceSimulationPeriod$historyPeriod.end[1],startReferenceData)\n\nif (nrow(referenceSimulationPeriod) > 1)\n{\n  for(i in c(2:nrow(referenceSimulationPeriod)))\n  {\n    fwdStrBasicInfo.sim <- addFwdInfo(fwdStrBasicInfo.sim,\n      createSimulationData(fwdStrBasicInfo,referenceSimulationPeriod$historyPeriod.start[i],\n                           referenceSimulationPeriod$historyPeriod.end[i],fwdStrBasicInfo.sim, scaleFactor = 0.55))\n  }\n}\n\n\nfwdStrBasicInfo.sim <- createFwdStrInfo(fwdStrBasicInfo.sim)\n\nprint(drawFwdCurvesWithPrice(fwdStrBasicInfo.sim))\nprint(drawContourCurve(fwdStrBasicInfo.sim))\n",
+    "created" : 1462758897889.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "381867688",
+    "id" : "5C2ECF0A",
+    "lastKnownWriteTime" : 1462954178,
+    "last_content_update" : -2147483648,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/10-PriceManipulation.R",
+    "project_path" : "10-PriceManipulation.R",
+    "properties" : {
+        "docOutlineVisible" : "0",
+        "source_window_id" : "",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 21,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

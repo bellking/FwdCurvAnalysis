@@ -1,0 +1,18 @@
+{
+    "contents" : "currentBCHMark <- 'DUBAI'\nrawDataFolder <- \"./RawData/\"\n\n# save key dataframe\ndataFileName <- paste(rawDataFolder, \"fwdStrBasicInfo\" , currentBCHMark , \".csv\" , sep =\"\" )\nwrite.csv(fwdStrBasicInfo, dataFileName , row.names = FALSE)\n\ndataFileName <- paste(rawDataFolder, \"fwdStrBasicInfo.MonthAvg\" , currentBCHMark , \".csv\" , sep =\"\" )\nwrite.csv(fwdStrBasicInfo.MonthAvg, dataFileName , row.names = FALSE)\n\ndataFileName <- paste(rawDataFolder, \"fwdStrCalInfo.MAvg\" , currentBCHMark , \".csv\" , sep =\"\" )\nwrite.csv(fwdStrCalInfo.MAvg, dataFileName , row.names = FALSE)\n\n# read key dataframe\n\ndataFileName <- paste(rawDataFolder, \"fwdStrBasicInfo\" , currentBCHMark , \".csv\" , sep =\"\" )\nfwdStrBasicInfo <- read.csv(dataFileName)\nread.zoo(dataFileName,sep=\",\",header=T, format = \"%Y-%m-%d\")\n\ndataFileName <- paste(rawDataFolder, \"fwdStrBasicInfo.MonthAvg\" , currentBCHMark , \".csv\" , sep =\"\" )\nfwdStrBasicInfo.MonthAvg <- read.csv(dataFileName)\n\n\ndataFileName <- paste(rawDataFolder, \"fwdStrCalInfo.MAvg\" , currentBCHMark , \".csv\" , sep =\"\" )\nfwdStrCalInfo.MAvg <- read.csv(dataFileName)",
+    "created" : 1458044936757.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "391894513",
+    "id" : "7A515297",
+    "lastKnownWriteTime" : 1456469698,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/91_DataMgt.R",
+    "project_path" : "91_DataMgt.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

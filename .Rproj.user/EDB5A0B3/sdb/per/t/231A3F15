@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1460433954436.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "231A3F15",
+    "lastKnownWriteTime" : 6,
+    "last_content_update" : -2147483648,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "idar7lseky",
+        "caption" : "slopeTrend.Analy",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=slopeTrend.Analy&cache_key=idar7lseky",
+        "displayedObservations" : "10130",
+        "environment" : "",
+        "object" : "slopeTrend.Analy",
+        "totalObservations" : "10130",
+        "variables" : "17"
+    },
+    "relative_order" : 12,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

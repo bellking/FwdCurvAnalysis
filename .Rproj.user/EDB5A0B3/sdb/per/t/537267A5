@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "# downside risk analysis\nmovingAvgPeriod <- 55\ndownRisk.LookAhead.Period <- 250\nworstDrop.Percentage <- 0.6\n\nworstCasePrice = fwdStrBasicInfo[fwdStrBasicInfo$MMDiff == 0, c('QDate','SpotPrice')]\n\nworstCasePrice$RollMean <- rollapplyr(  data = worstCasePrice$SpotPrice , wid = movingAvgPeriod , fill = NA , mean)\nworstCasePrice$WorstPrice <- worstCasePrice$RollMean * (1 - worstDrop.Percentage)\n\n\nworstCasePrice$TargetDate <- c(worstCasePrice$QDate[-seq(downRisk.LookAhead.Period)], rep(NA,downRisk.LookAhead.Period))\n\ndownSideRisk.plot <- ggplot(data = worstCasePrice , aes(x = QDate, y = SpotPrice , group = NULL,color = 'red')  ) +\n  geom_line(size=1) +\n  geom_line(size = 1, aes(x = TargetDate, y = WorstPrice ) , color = 'blue' ) \n\nprint(downSideRisk.plot)\n\ndownSideRisk.plot <- downSideRisk.plot +\ngeom_point(size = 0.5 ,  aes(x = QDate,y = SpotPrice - WorstPrice ) , color = 'black')\n  \n\nprint(downSideRisk.plot)\n\n\n\n",
+    "created" : 1458708477770.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1641945370",
+    "id" : "537267A5",
+    "lastKnownWriteTime" : 1461306935,
+    "last_content_update" : -2147483648,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/05_DownsideRisk.R",
+    "project_path" : "05_DownsideRisk.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

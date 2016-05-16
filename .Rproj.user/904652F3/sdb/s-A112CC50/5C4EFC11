@@ -1,0 +1,18 @@
+{
+    "contents" : "plot(AirPassengers)\n\napts <- ts(AirPassengers, frequency=12)\nf <- decompose(apts)\nplot(f)\nfit <- arima(AirPassengers, order=c(1,0,0), list(order=c(2,1,0), period=12))\nfore <- predict(fit, n.ahead=24)\nU <- fore$pred + 2*fore$se\nL <- fore$pred - 2*fore$se\nts.plot(AirPassengers, fore$pred, U, L)\n\n\nseat <- as.zoo(log(UKDriverDeaths))\nseat <- merge(y = seat, y1 = lag(seat, k = -1),\n              y12 = lag(seat, k = -12), all = FALSE)\n\nrr <- rollapply(seat, width = 36,\n                FUN = function(z) coef(lm(y ~ y1 + y12, data = as.data.frame(z))),\n                by.column = FALSE, align = \"right\")\n\n\nseat <- NULL\nrr <- NULL\n\ntt <- as.Date(\"2000-01-01\") + c(1, 2, 5, 6, 7, 8, 10)\nz <- zoo(seq_along(tt), tt)\ng <- zoo(, seq(start(z), end(z), \"day\"))\n\nzm <- merge(z, g)\nrollapply(zm, 3, mean, na.rm = TRUE, fill = NA)\n\ntt <- NULL\nz <- NULL\ng <- NULL\n\nL2 <- rep(list(-(2:0)), 10)\n\nL2[5] <- list(NULL)\nL2[7] <- list(0:1)\n\n\nstr(L2)\n\ny <- 10 * seq(12); k <- 4; d <- 3\n\ny <- timeSequence(from = \"2001-01-01\", to = \"2009-01-01\", by = \"day\")\n\n\n\n\n",
+    "created" : 1458044943684.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1583338723",
+    "id" : "5C4EFC11",
+    "lastKnownWriteTime" : 1458296182,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/TSTest.R",
+    "project_path" : "TSTest.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

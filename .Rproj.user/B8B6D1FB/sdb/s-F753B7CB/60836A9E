@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "createFwdDataInfo <- function(spotHistory,fwdHistory,bchMark)\n{\n  fwdHistory$FwdYM <- strtrim(fwdHistory$FwdYM,7)\n  fwdHistory <- fwdHistory[fwdHistory$FwdPrice > 0 ,]\n  \n  #spotHistory <- read.csv(spotRawDateFile)\n  spotHistory$YM <- as.yearmon(as.Date(spotHistory$QDate))\n  spotHistory <- ddply(spotHistory, .(YM), mutate,\n                       IndexFromStart = index(SpotPrice))\n  \n  spotHistory$MMvAvg <- rollapplyr(spotHistory$SpotPrice\n                                   , width = spotHistory$IndexFromStart  , mean , partial = F)\n  spotHistory$YM <- NULL\n  spotHistory$IndexFromStart <- NULL\n  \n  # 2. combine the data\n  \n  fullHistory <- merge(fwdHistory, spotHistory, by = \"QDate\", all=F)\n  \n  # 3. add structure info\n  \n  \n  fwdStrBasicInfo <- fullHistory\n  \n  fwdStrBasicInfo$BCHMark <- bchMark\n  fwdStrBasicInfo$QDate <- as.Date(fwdStrBasicInfo$QDate , \"%Y-%m-%d\")\n  fwdStrBasicInfo$FwdYM <- convertFYMStr2Date(fwdStrBasicInfo$FwdYM)\n  \n  fwdStrBasicInfo$MMDiff <- elapsed_months(fwdStrBasicInfo$FwdYM , fwdStrBasicInfo$QDate)\n  \n  \n  # fill missing fwdprice of M0 with mav\n  \n  fwdStrBasicInfo$FwdPriceTy <- 'OR'\n  FillMissingM0 <- ddply(fwdStrBasicInfo, .(QDate), summarise, QDate = QDate[1], FwdYM = convertFYMStr2Date(format(QDate[1], \"%Y-%m\")) , FwdPrice= MMvAvg[1], SpotPrice= SpotPrice[1], MMDiff = min(MMDiff), BCHMark = BCHMark[1], MMvAvg = MMvAvg[1], FwdPriceTy = 'CMV')\n  FillMissingM0 <- FillMissingM0[FillMissingM0$MMDiff >0,]\n  \n  if (length(FillMissingM0$MMDiff) > 0)\n  {\n    FillMissingM0$MMDiff <- 0\n    fwdStrBasicInfo <- rbind(fwdStrBasicInfo, FillMissingM0)\n  }\n  \n  fwdStrBasicInfo <- fwdStrBasicInfo[!is.na(fwdStrBasicInfo$SpotPrice),]\n  \n  # order data by QDate and FwdMM\n  fwdStrBasicInfo <- fwdStrBasicInfo[order(fwdStrBasicInfo$QDate,fwdStrBasicInfo$MMDiff),]\n  rownames(fwdStrBasicInfo) <- index(fwdStrBasicInfo)\n  fwdStrBasicInfo$QYM <- convertFYMStr2Date(format(fwdStrBasicInfo$QDate, \"%Y-%m\"))\n  \n  fwdStrBasicInfo <- fwdStrBasicInfo[as.yearmon(fwdStrBasicInfo$QDate) <= as.yearmon(fwdStrBasicInfo$FwdYM) ,]\n}\n\ncreateFwdDataInfo.MAvg <- function(fwdStrBasicInfo)\n{\n  fwdStrBasicInfo.MonthAvg <- ddply(fwdStrBasicInfo, .(QYM, FwdYM), summarise, QDate = QYM[1], FwdYM = FwdYM[1], FwdPrice = mean(FwdPrice), SpotPrice = mean(SpotPrice), BCHMark = BCHMark[1])\n  fwdStrBasicInfo.MonthAvg$MMDiff <- elapsed_months(fwdStrBasicInfo.MonthAvg$FwdYM , fwdStrBasicInfo.MonthAvg$QDate)\n  fwdStrBasicInfo.MonthAvg <- fwdStrBasicInfo.MonthAvg[!is.na(fwdStrBasicInfo.MonthAvg$QDate),]\n}\n",
+    "created" : 1463125235310.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "91052742",
+    "id" : "60836A9E",
+    "lastKnownWriteTime" : 1462925612,
+    "last_content_update" : 1462925612,
+    "path" : "D:/IRMS_R/91_DataManipulationFunction.R",
+    "project_path" : "91_DataManipulationFunction.R",
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

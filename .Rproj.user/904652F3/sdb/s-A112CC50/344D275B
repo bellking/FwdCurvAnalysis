@@ -1,0 +1,18 @@
+{
+    "contents" : "library(timeSeries)\n\nsummaryOfSlope <- aggregate(FwdDeltaWPrev ~ MMDiff + LongTermStr , summary, data=fwdStrCalInfo.MAvg)\nsummaryOfSlope.Detail <- summaryOfSlope$FwdDeltaWPrev\nboxplot(FwdDeltaWPrev ~ MMDiff + LongTermStr, data=fwdStrCalInfo.MAvg)\n\n\n#Arima of FwdDelta\n\n\nhelp(acf)\n# 1. plot of delta\ntestMMDiff <- 3\nfwdDeltTS.Daily <- fwdStrBasicInfo[fwdStrBasicInfo$MMDiff == testMMDiff,c('QDate','FwdDelta')]\nplot(fwdDeltTS.Daily, type = \"l\")\n\nfwdDeltTS.MAv <- fwdStrCalInfo.MAvg[fwdStrCalInfo.MAvg$MMDiff == testMMDiff,c('QYM','FwdDelta')]\nplot(fwdDeltTS.MAv, type = \"l\")\n\ndisplayColor <- rainbow(max(fwdStrCalInfo.MAvg$MMDiff)+1)\n\ninterestPeriod.start <- '2006-05-15'\ninterestPeriod.end <- '2016-03-15'\n\nplotFwdByMDiff.Daily <- ggplot(data = fwdStrBasicInfo[fwdStrBasicInfo$QYM >= interestPeriod.start & fwdStrBasicInfo$QYM <= interestPeriod.end  , ] , aes(x = QDate, y = FwdDelta, group=MMDiff, color= displayColor[MMDiff+1])) +\n  geom_line(size=0.3)\nprint(plotFwdByMDiff.Daily)\n\n\nplotFwdByMDiff.Monthly <- ggplot(data = fwdStrCalInfo.MAvg[fwdStrCalInfo.MAvg$QYM >= interestPeriod.start & fwdStrCalInfo.MAvg$QYM <= interestPeriod.end , ] , aes(x = QYM, y = FwdDelta, group = MMDiff, color= displayColor[MMDiff+1])) +\n  geom_line(size=0.2) +\n  geom_point(size=0.5)\nprint(plotFwdByMDiff.Monthly)\n\n\n\n",
+    "created" : 1456548631780.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "112649208",
+    "id" : "344D275B",
+    "lastKnownWriteTime" : 1458351356,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/03_StructureAnalysis.R",
+    "project_path" : "03_StructureAnalysis.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

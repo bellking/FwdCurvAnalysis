@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#best cycle analysis\n\n#'3rd Qu.', 'Mean'\n\nthreshHoldLevel <- mean(bestDefaultCycle[1,c('Mean','3rd Qu.')])\n\n\nbestCycle.AnalysisData <- fwdStrBasicInfo[fwdStrBasicInfo$LongTermStr == 'CNTG',]\nbestCycle.AnalysisData <- bestCycle.AnalysisData[bestCycle.AnalysisData$MMDiff <= defaultPlayCycle[2] | - bestCycle.AnalysisData$FwdDeltaWPrev >= threshHoldLevel,]\n\nbestCycle.AnalysisData <- ddply(bestCycle.AnalysisData, .(QDate) , summarise, \n                                bestCycle = max(MMDiff), futureDelta = - FwdDelta[length(FwdDelta)]\n                                , QYM = QYM[1])\n\nplot(bestCycle.AnalysisData$QDate,bestCycle.AnalysisData$bestCycle)\n\n#past earning\nhowFarLookback <- 6\n\nrealizedPastEarning <- fwdStrCalInfo.MAvg[fwdStrCalInfo.MAvg$MMDiff == howFarLookback,c('FwdYM','FwdDelta')]\nrealizedPastEarning$PastFwdDelta <- - realizedPastEarning$FwdDelta\nrealizedPastEarning$QYM <- realizedPastEarning$FwdYM\nrealizedPastEarning$FwdDelta <- NULL\nrealizedPastEarning$FwdYM <- NULL\n\nbestCycle.AnalysisData <- merge(bestCycle.AnalysisData, realizedPastEarning , by = \"QYM\" , all = F)\n\n\n#open position volume analysis\n\n\nopenPosition.Analysis <- merge(bestCycle.AnalysisData, worstCasePrice, by = \"QDate\", all=F)\nopenPosition.Analysis <- openPosition.Analysis[!is.na(openPosition.Analysis$WorstPrice),]\nopenPosition.Analysis$OpenByFuture <- 100 * 1/ (1 +  (openPosition.Analysis$SpotPrice - openPosition.Analysis$WorstPrice) / openPosition.Analysis$futureDelta)\nopenPosition.Analysis$OPenByWhole <-  100 * 1/ (1 +  (openPosition.Analysis$SpotPrice - openPosition.Analysis$WorstPrice) / (openPosition.Analysis$futureDelta + openPosition.Analysis$PastFwdDelta))\nrow.names(openPosition.Analysis) <- openPosition.Analysis$QDate\n\nplot(openPosition.Analysis$QDate,openPosition.Analysis$OpenPositionPortion)\n\n\n\ndisplayVar <- c('QDate','SpotPrice','bestCycle','OpenByFuture','OPenByWhole','futureDelta','PastFwdDelta')\n#displayVar <- c('QDate','SpotPrice','bestCycle','OpenByFuture','futureDelta')\n\n\nopenSpotionKeyInfo.Melt <- melt(openPosition.Analysis[,displayVar] , id = 'QDate')\n\npolicy.plot <- ggplot(data = openSpotionKeyInfo.Melt , aes(x = as.Date(QDate), y = value , group = variable, color = variable) ) +\n  geom_line(size=0.3) +\n  #geom_line(size = 0.5, aes(y = bestCycle ) , color = 'blue' ) +\n  #geom_line(size = 0.5, aes(y = OpenPositionPortion ) , color = 'black' ) +\n  #geom_line(size = 0.5, aes(y = totalDelta ) , color = 'purple' ) +\n  #geom_line(data = fwdStrCalInfo.MAvg , aes(x = as.Date(QDate), y = FwdPrice, group= NULL, color= StrColor + as.numeric(format(QDate, \"%d\")))) +\n  scale_y_continuous(breaks = seq(0,150,10)) +\n  scale_x_date(date_breaks = \"6 months\" , date_labels = \"%y/%b\")\nprint(policy.plot)\n\ntail(openPosition.Analysis)\n",
+    "created" : 1458897220138.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2081022630",
+    "id" : "18F6E63E",
+    "lastKnownWriteTime" : 1459242051,
+    "last_content_update" : -2147483648,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/07_PolicyAnalysis.R",
+    "project_path" : "07_PolicyAnalysis.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 11,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

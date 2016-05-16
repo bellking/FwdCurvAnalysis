@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "boxplot(FwdDeltaWPrev ~ MMDiff + LongTermStr, data=fwdStrCalInfo.MAvg)\nboxplot(FwdDeltaWPrev ~ MMDiff + LongTermStr, data=fwdStrBasicInfo)\n\n#draw a forward curve\nplotFwdCurves <- drawFwdCurvesWithPrice(fwdStrCalInfo.MAvg,fwdStrBasicInfo[,c('QDate','SpotPrice')])\nprint(plotFwdCurves)\n\nplotFwdByMDiff.Daily <- drawContourCurve(fwdStrBasicInfo)\nprint(plotFwdByMDiff.Daily)\n\n\nplotFwdByMDiff.Monthly <- drawContourCurve(fwdStrCalInfo.MAvg)\nprint(plotFwdByMDiff.Monthly)\n\nprint(corelationTrend)\n\nprint(drawCorrelationTrend(curveChangeAnaylsis.summary,fwdStrBasicInfo,c(3,24)))\n\nprint(drawSlopeTrend(slopeTrend.Analy))\n",
+    "created" : 1463103814478.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4094623272",
+    "id" : "7C1019F0",
+    "lastKnownWriteTime" : 1463120895,
+    "last_content_update" : -2147483648,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/DrawPlots.R",
+    "project_path" : "DrawPlots.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 24,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

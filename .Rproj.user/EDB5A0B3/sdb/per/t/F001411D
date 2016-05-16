@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(zoo)\nlibrary(plyr)\nlibrary(ggplot2)\n\nlibrary(grid)\nlibrary(gtable)\n\nlibrary(timeSeries)\nlibrary(car)\nlibrary(lubridate)\n\nlibrary(reshape2)\n\nlibrary(RODBC)\n",
+    "created" : 1458782179001.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "789177808",
+    "id" : "F001411D",
+    "lastKnownWriteTime" : 1463089987,
+    "last_content_update" : -2147483648,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/0_LoadLibraries.R",
+    "project_path" : "0_LoadLibraries.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

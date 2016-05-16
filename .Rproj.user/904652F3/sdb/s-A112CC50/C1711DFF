@@ -1,0 +1,18 @@
+{
+    "contents" : "# figure out fwdCurve Structure\n\n#structure for daily data\nfwdStrBasicInfo <- ddply(fwdStrBasicInfo, .(QDate), mutate,\n                            FwdDelta = FwdPrice[1] - FwdPrice ,\n                            FwdDelta2 =FwdPrice[2] - FwdPrice , \n                            LongTermDelta = FwdPrice[1] - FwdPrice[max(index(FwdPrice))] ,\n                            FwdDeltaWPrev = c(0,FwdPrice[1:max(index(FwdPrice))-1] - FwdPrice[2:max(index(FwdPrice))])\n)\n\n# add more structure data for daily average\nfwdStrBasicInfo$SlopeFromOrg <- 0\nfwdStrBasicInfo[fwdStrBasicInfo$MMDiff > 0 ,]$SlopeFromOrg <- fwdStrBasicInfo[fwdStrBasicInfo$MMDiff > 0 ,'FwdDelta'] / fwdStrBasicInfo[fwdStrBasicInfo$MMDiff > 0 ,'MMDiff']\nfwdStrBasicInfo$LongTermStr <- 'BKWD'\nfwdStrBasicInfo[fwdStrBasicInfo$LongTermDelta < 0,]$LongTermStr <- 'CNTG'\nfwdStrBasicInfo[fwdStrBasicInfo$LongTermDelta > 0,]$LongTermStr <- 'BKWD'\n\n\n\n\n# structure for month data\nfwdStrCalInfo.MAvg <- ddply(fwdStrBasicInfo.MonthAvg, .(QYM), mutate,\n                                           FwdDelta = FwdPrice[1] - FwdPrice , \n                                            FwdDelta2 = FwdPrice[2] - FwdPrice ,\n                            LongTermDelta = FwdPrice[1] - FwdPrice[max(index(FwdPrice))],\n                            FwdDeltaWPrev = c(0,FwdPrice[1:max(index(FwdPrice))-1] - FwdPrice[2:max(index(FwdPrice))])\n                            )\n#add more structure data for monthly average\nfwdStrCalInfo.MAvg$SlopeFromOrg <- 0\nfwdStrCalInfo.MAvg[fwdStrCalInfo.MAvg$MMDiff > 0 ,]$SlopeFromOrg <- fwdStrCalInfo.MAvg[fwdStrCalInfo.MAvg$MMDiff > 0 ,'FwdDelta'] / fwdStrCalInfo.MAvg[fwdStrCalInfo.MAvg$MMDiff > 0 ,'MMDiff']\nfwdStrCalInfo.MAvg$LongTermStr <- 'BKWD'\nfwdStrCalInfo.MAvg[fwdStrCalInfo.MAvg$LongTermDelta < 0,]$LongTermStr <- 'CNTG'\nfwdStrCalInfo.MAvg[fwdStrCalInfo.MAvg$LongTermDelta > 0,]$LongTermStr <- 'BKWD'\n\n\n\n\n\n\nfwdStrCalInfo.MAvg$LongTermStr <- as.factor(fwdStrCalInfo.MAvg$LongTermStr)\n\ncolorRange <- 700\nfwdStrCalInfo.MAvg$StrColor <- colorRange / 2\nfwdStrCalInfo.MAvg[fwdStrCalInfo.MAvg$LongTermStr == 'CNTG',]$StrColor <- 0\nfwdStrCalInfo.MAvg[fwdStrCalInfo.MAvg$LongTermStr == 'BKWD',]$StrColor <- colorRange\n\nfwdStrBasicInfo$StrColor <- colorRange / 2\nfwdStrBasicInfo[fwdStrBasicInfo$LongTermStr == 'CNTG',]$StrColor <- 0\nfwdStrBasicInfo[fwdStrBasicInfo$LongTermStr == 'BKWD',]$StrColor <- colorRange\n\n\n\n#plotFwdCurves <- ggplot(data = fwdStrBasicInfo.in.summary , aes(x = as.Date(FwdYM), y = FwdPrice, group=QDate, color=StrColor)) + #\nplotFwdCurves <- ggplot(data = fwdStrCalInfo.MAvg , aes(x = as.Date(FwdYM), y = FwdPrice, group=QYM, color= StrColor + as.numeric(format(QYM, \"%d\")))) +\n  \n  # geom_line(size=0.5,  aes(x = as.numeric(QDate), y = SpotPrice, group=NULL), color=\"red\") +  \n  geom_line(size=0.5) +\n  geom_line(data = fwdStrBasicInfo[fwdStrBasicInfo$MMDiff == 0,], size=0.5,  aes(x = as.Date(QDate), y = FwdPrice, group=NULL), color=\"red\")\n\n\nprint(plotFwdCurves)\n",
+    "created" : 1456406298881.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3033027163",
+    "id" : "C1711DFF",
+    "lastKnownWriteTime" : 1456995114,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/02_FwdStrDataGen.R",
+    "project_path" : "02_FwdStrDataGen.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

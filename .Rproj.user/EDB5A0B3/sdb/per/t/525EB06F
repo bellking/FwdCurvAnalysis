@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "getPriceChangeInPercentage <- function(startPrice,scaleFactor,priceData)\n{\n  originalStartPrice <- priceData[1]\n  priceData <- rollapplyr(priceData\n                          , width = 1  , function(x) startPrice + scaleFactor * (x[1] - originalStartPrice) , partial = F)\n  as.vector(priceData)\n}\n\n\n\nminipuldateFwdPrice <- function(referenceFwdPrice,targetFwdPrice,scaleFactor)\n{\n  targetMMDiff <- c(0:max(referenceFwdPrice$MMDiff))\n  targetFwdPrice <- targetFwdPrice[targetFwdPrice$MMDiff %in% targetMMDiff,]\n  \n  for(i in targetMMDiff)\n  {\n    currentFwdPrice <- targetFwdPrice[targetFwdPrice$MMDiff == i,]\n    targetFwdPrice[targetFwdPrice$MMDiff == i,]$FwdPrice <- getPriceChangeInPercentage(referenceFwdPrice[i+1,]$FwdPrice, scaleFactor,currentFwdPrice$FwdPrice )\n  }\n  targetFwdPrice\n}\n\ncreateSimulationData <- function(simulationReference , historyPeriod.start, historyPeriod.end, startFwdData, referenceDate, scaleFactor , bchMark = 'DUBAI')\n{\n  \n  if (missing(historyPeriod.start))\n    historyPeriod.start <- min(simulationReference$QDate)\n  if (missing(historyPeriod.end))\n    historyPeriod.end <- max(simulationReference$QDate)\n  if (missing(referenceDate))\n    referenceDate <- max(startFwdData$QDate)\n  \n  simulationReference <- simulationReference[simulationReference$QDate >= historyPeriod.start & simulationReference$QDate <= historyPeriod.end, ]\n  \n  startFwdData <- startFwdData[startFwdData$QDate == referenceDate,]\n  \n  timediff <- as.Date(referenceDate) - as.Date(historyPeriod.start)\n  \n  simulationSpotPrice <- simulationReference[!duplicated(simulationReference$QDate),c('QDate','SpotPrice')]\n  \n  #shift date to simulation period\n\n  startSpotPrice <- startFwdData$SpotPrice[1]\n  referencePrice <- simulationSpotPrice$SpotPrice[1]\n  \n  if (missing(scaleFactor))\n     scaleFactor <- startSpotPrice / referencePrice\n  \n  simulationSpotPrice$QDate <- simulationSpotPrice$QDate + timediff\n  simulationReference$QDate <- simulationReference$QDate + timediff\n  simulationReference$FwdYM <- getYearMonth(simulationReference$QDate , simulationReference$MMDiff)\n\n  simulationSpotPrice$SpotPrice <-\n    getPriceChangeInPercentage(startSpotPrice, scaleFactor , simulationSpotPrice$SpotPrice)\n\n  simulationReference <- minipuldateFwdPrice(startFwdData,simulationReference[,c('QDate','FwdYM','FwdPrice','MMDiff')],scaleFactor)\n\n  simulationReference$MMDiff <- NULL\n\n  fwdStrBasicInfo.sim <- createFwdDataInfo(simulationSpotPrice,simulationReference,bchMark)\n  #fwdStrBasicInfo.sim <- fwdStrBasicInfo.sim[fwdStrBasicInfo.sim$QDate > referenceDate,]\n}\n\n\naddFwdInfo <- function(currentFwdData,addedFwdData)\n{\n  referenceDate <- min(addedFwdData$QDate)\n  currentFwdData <- currentFwdData[currentFwdData$QDate < referenceDate,] \n  rbind(currentFwdData,addedFwdData)\n}\n",
+    "created" : 1463043797721.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2052252176",
+    "id" : "525EB06F",
+    "lastKnownWriteTime" : 1463044004,
+    "last_content_update" : -2147483648,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/93_SimulationFunctions.R",
+    "project_path" : "93_SimulationFunctions.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 24,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

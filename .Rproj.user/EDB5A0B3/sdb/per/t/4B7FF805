@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\nSpotPrice.Mvg <- fwdStrCalInfo.MAvg[fwdStrCalInfo.MAvg$MMDiff == 0, c('QDate','FwdPrice')]\nn1 <- nrow(SpotPrice.Mvg)\nn2 <- nrow(SpotPrice.Mvg) -1 \n\nrownames(SpotPrice.Mvg) <- format(SpotPrice.Mvg$QDate, \"%Y-%m-%d\")\nPriceChange.Return <-  SpotPrice.Mvg[2:n1,]\n\n\nPriceChange.Return$Return <- (SpotPrice.Mvg$FwdPrice[2:n1] - SpotPrice.Mvg$FwdPrice[1:n2]) /SpotPrice.Mvg$FwdPrice[1:n2]\n\nPriceChange.Return$QDate <- NULL\nPriceChange.Return$FwdPrice <- NULL\n\nSpotPrice.Mvg <- ts(SpotPrice.Mvg, start = c(2006,6), end = c(2016,2), frequency = 12)\n\nchart.Drawdown(PriceChange.Return)\nfindDrawdowns(PriceChange.Return)\n\ncharts.PerformanceSummary(PriceChange.Return)\ntable.Stats(PriceChange.Return)\n\nplot(managers)\nplot(SpotPrice.Mvg)\n\ndata(edhec)\n",
+    "created" : 1458627982537.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3294485609",
+    "id" : "4B7FF805",
+    "lastKnownWriteTime" : 1461300235,
+    "last_content_update" : -2147483648,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/06_PerformanceAnaly.R",
+    "project_path" : "06_PerformanceAnaly.R",
+    "properties" : {
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#SetofAnalyzingPrice <- c('DUBAI') 'MOPS_FO380'\n#SetofAnalyzingPrice <- c('WTI','BRENT','DUBAI')\nSetofAnalyzingPrice <- c('WTI','BRENT','DUBAI','MOPS_FO180','MOPS_FO380')\nvalueScale <- c(1,1,1,1/6.5,1/6.5)\nbreakPoint <- c(1,2,6,12,30)\nresultDF = data.frame()\n\nsource('0_LoadLibraries.R')\n\nsource('90_CommonUtilFunction.R')\nsource('91_DataManipulationFunction.R')\nsource('92_FwdStructureInfoFunction.R')\n\n#length(SetofAnalyzingPrice)\n\nfor(i in 1:length(SetofAnalyzingPrice))\n{\n  currentPriceId <- SetofAnalyzingPrice[i]\n  \n  spotHistory <- getDataFromDB(currentPriceId,'S')\n  spotHistory$SpotPrice <- valueScale[i] * spotHistory$SpotPrice\n  fwdHistory <- getDataFromDB(currentPriceId,'F')\n  fwdHistory$FwdPrice <- valueScale[i] * fwdHistory$FwdPrice\n  \n  #source('90_CommonUtilFunction.R')\n  fwdStrBasicInfo <- createFwdDataInfo(spotHistory,fwdHistory,currentPriceId)\n  fwdStrBasicInfo.MonthAvg <- createFwdDataInfo.MAvg(fwdStrBasicInfo)\n  \n  #source('91_DataManipulationFunction.R')\n  fwdStrBasicInfo <- createFwdStrInfo(fwdStrBasicInfo)\n  fwdStrCalInfo.MAvg <- createFwdStrInfo(fwdStrBasicInfo.MonthAvg)\n  \n  #source('92_FwdStructureInfoFunction.R')\n  curveChangeAnaylsis.summary <- createCorrelation(fwdStrBasicInfo, c(1,3,30),'2008-03-01', wid = 40, freq = 3)\n  slopeTrend.Analy <- createSlopeAnalysis(fwdStrBasicInfo, '2008-03-01', breakPoint = breakPoint)\n  \n  resultDF <- rbind(resultDF, writeResult(currentPriceId,fwdStrCalInfo.MAvg, fwdStrBasicInfo,curveChangeAnaylsis.summary,slopeTrend.Analy,\n                                          c(1,2,6,12,18,24,30)))\n}\n\nuploadResultToDB(resultDF)",
+    "created" : 1463125100892.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3747556920",
+    "id" : "7DB024D2",
+    "lastKnownWriteTime" : 1463361870,
+    "last_content_update" : 1463361870212,
+    "path" : "D:/IRMS_R/BatchProcessOfFwdStrAnalysis.R",
+    "project_path" : "BatchProcessOfFwdStrAnalysis.R",
+    "properties" : {
+        "docOutlineVisible" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

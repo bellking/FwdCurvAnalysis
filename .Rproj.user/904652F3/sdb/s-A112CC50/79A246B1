@@ -1,0 +1,18 @@
+{
+    "contents" : "# specify the focusing period with smoothing factor\n\ninterestPeriod.start <- '2014-01-15'\ninterestPeriod.end <- '2016-02-27'\n\nfwdStrBasicInfo.interest <- fwdStrBasicInfo[fwdStrBasicInfo$QYM >= interestPeriod.start & fwdStrBasicInfo$QYM <= interestPeriod.end ,]\nsmoothingPeriod <- 10\nfwdStrBasicInfo.in.summary <- ddply(fwdStrBasicInfo.interest, .(FwdYM), summarise,\n                                    FwdPrice = rollmean(FwdPrice,smoothingPeriod,na.pad = F),\n                                    QDate = rollmax(QDate,smoothingPeriod,na.pad = F)\n)\n\nfwdStrBasicInfo.in.summary$MMDiff <- elapsed_months(fwdStrBasicInfo.in.summary$FwdYM,fwdStrBasicInfo.in.summary$QDate)\n\nfwdStrBasicInfo.in.summary <- ddply(fwdStrBasicInfo.in.summary, .(QDate), mutate,\n                                    FwdDelta = FwdPrice[1] - FwdPrice ,\n                                    FwdDelta2 =FwdPrice[2] - FwdPrice , \n                                    LongTermDelta = FwdPrice[1] - FwdPrice[max(index(FwdPrice))] ,\n                                    FwdDeltaWPrev = c(0,FwdPrice[1:max(index(FwdPrice))-1] - FwdPrice[2:max(index(FwdPrice))])\n)\n\n# add more structure data for daily average\nfwdStrBasicInfo.in.summary$SlopeFromOrg <- 0\nfwdStrBasicInfo.in.summary[fwdStrBasicInfo.in.summary$MMDiff > 0 ,]$SlopeFromOrg <- fwdStrBasicInfo.in.summary[fwdStrBasicInfo.in.summary$MMDiff > 0 ,'FwdDelta'] / fwdStrBasicInfo.in.summary[fwdStrBasicInfo.in.summary$MMDiff > 0 ,'MMDiff']\nfwdStrBasicInfo.in.summary$LongTermStr <- 'BKWD'\nfwdStrBasicInfo.in.summary[fwdStrBasicInfo.in.summary$LongTermDelta < 0,]$LongTermStr <- 'CNTG'\nfwdStrBasicInfo.in.summary[fwdStrBasicInfo.in.summary$LongTermDelta > 0,]$LongTermStr <- 'BKWD'\n\n# color code\ncolorRange <- 700\nfwdStrBasicInfo.in.summary$StrColor <- colorRange / 2\nfwdStrBasicInfo.in.summary[fwdStrBasicInfo.in.summary$LongTermStr == 'CNTG',]$StrColor <- 0\nfwdStrBasicInfo.in.summary[fwdStrBasicInfo.in.summary$LongTermStr == 'BKWD',]$StrColor <- colorRange\n\n#draw a plot\nplotFwdCurves <- ggplot(data = fwdStrBasicInfo.in.summary , aes(x = as.Date(FwdYM), y = FwdPrice, group=QDate, color=StrColor)) + #\n\n  # geom_line(size=0.5,  aes(x = as.numeric(QDate), y = SpotPrice, group=NULL), color=\"red\") +  \n  geom_line(size=0.5) +\n  geom_line(data = fwdStrBasicInfo.interest[fwdStrBasicInfo.interest$MMDiff == 0,], size=0.5,  aes(x = as.Date(QDate), y = FwdPrice, group=NULL), color=\"red\")\n\n\nprint(plotFwdCurves)\n\n# draw a contour plot\ndisplayColor <- rainbow(max(fwdStrBasicInfo.in.summary$MMDiff))\n\nplotFwdByMDiff.MovingAvg <- ggplot(data = fwdStrBasicInfo.in.summary , aes(x = QDate, y = FwdDelta, group=MMDiff, color= displayColor[MMDiff+1])) +\n#plotFwdByMDiff.MovingAvg <- ggplot(data = fwdStrBasicInfo.in.summary[fwdStrBasicInfo.in.summary$MMDiff > 0 , ] , aes(x = as.Date(QDate), y = FwdDelta2, group=MMDiff, color= displayColor[MMDiff+1])) +\n  geom_line(size=0.3)\nprint(plotFwdByMDiff.MovingAvg)\n\n\n",
+    "created" : 1456994893997.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2130008655",
+    "id" : "79A246B1",
+    "lastKnownWriteTime" : 1457060173,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/04_DailyBaseAnalysis.R",
+    "project_path" : "04_DailyBaseAnalysis.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

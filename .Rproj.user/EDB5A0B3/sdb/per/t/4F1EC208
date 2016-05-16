@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1462717356340.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "4F1EC208",
+    "lastKnownWriteTime" : 6,
+    "last_content_update" : -2147483648,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "t9s0go3nfd",
+        "caption" : "simulationSpotPrice",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=simulationSpotPrice&cache_key=t9s0go3nfd",
+        "displayedObservations" : 377,
+        "environment" : "",
+        "object" : "simulationSpotPrice",
+        "totalObservations" : 377,
+        "variables" : 2
+    },
+    "relative_order" : 20,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

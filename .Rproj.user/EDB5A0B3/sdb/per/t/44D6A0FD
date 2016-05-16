@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\n#\n\n\n# drawing the data\nstartRow <- as.integer(nrow(fwdStrBasicInfo)* 0 / 5)\nendRow <- as.integer(nrow(fwdStrBasicInfo) * 5 /5)\n\n#plotFwdCurves <- ggplot(data = fwdStrBasicInfo , aes(x = as.numeric(as.Date(FwdYM)), y = FwdPrice, group=QDate, color=as.numeric(format(QDate, \"%d\")))) +\nplotFwdCurves <- ggplot(data = fwdStrBasicInfo.MonthAvg , aes(x = as.numeric(as.Date(FwdYM)), y = FwdPrice, group=QDate)) +\n  \n   # geom_line(size=0.5,  aes(x = as.numeric(QDate), y = SpotPrice, group=NULL), color=\"red\") +  \n  geom_line(size=0.5) +\n  geom_line(data = fwdStrBasicInfo.MonthAvg[fwdStrBasicInfo.MonthAvg$FwdYM == fwdStrBasicInfo.MonthAvg$QDate,], size=1,  aes(x = as.numeric(as.Date(FwdYM)), y = FwdPrice, group=NULL), color=\"blue\")\n  \n\nprint(plotFwdCurves)\n\n\n\n",
+    "created" : 1458536589459.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "713762890",
+    "id" : "44D6A0FD",
+    "lastKnownWriteTime" : 1462767051,
+    "last_content_update" : -2147483648,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/01_DataPreProcess.R",
+    "project_path" : "01_DataPreProcess.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

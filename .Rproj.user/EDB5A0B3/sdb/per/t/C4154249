@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1461301547672.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "C4154249",
+    "lastKnownWriteTime" : 6,
+    "last_content_update" : -2147483648,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "k29efzu250",
+        "caption" : "dftest",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=dftest&cache_key=k29efzu250",
+        "displayedObservations" : 0,
+        "environment" : "",
+        "object" : "dftest",
+        "totalObservations" : 0,
+        "variables" : 3
+    },
+    "relative_order" : 16,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

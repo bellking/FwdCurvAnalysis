@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "simulationStartingDate <- as.Date('2008-05-20')\nrawData.ForSimulation <- fwdStrBasicInfo[fwdStrBasicInfo$QYM > simulationStartingDate - 30,]\nsimulationPeriod <- unique(rawData.ForSimulation$QDate)\n\nfwdStrBasicInfo$\n\npolicyBookKeeping <- \n\nopenPosition.Analysis\n\n\nrunSimulation\n\nPaperTrading.BookKeeping <- data.frame(Underlying.rAsset =\"\" , Contract.Type =\"\" ,Open.Date = date(), Close.Date = date(),FwdYM = date(), Postion = \"\", Open.Vol = 1, Close.Vol = 1, Open.Price = 1, Close.Price = 1, Status = \"\")\nPaperTrading.BookKeeping <- PaperTrading.BookKeeping[-1,]\nPhyiscalTrading.BookKeeping <- data.frame(Asset =\"\" , Buy.Date = date(), Sell.Date = date(), Buy.Price =1, Sell.Price = 1, Vol = 1 , Status = \"\")\nPhyiscalTrading.BookKeeping <- PhyiscalTrading.BookKeeping[-1,]\nPnL.BookKeeping<- data.frame(BQdate = date(), Appreiciated.PnL = 1, Realized.PnL = 1, Accumulated.APnL = 1 , Accumulated.RPnL = 1 , CashFlow = 1)\nPnL.BookKeeping <- PnL.BookKeeping[-1,]\n\nfwdStr.Previous <- 'CNTG'\n\nfor(i in 1:length(simulationPeriod))\n{\n  currentDate <- simulationPeriod[i]\n\n  \n  # contango ply policy\n  \n}\n\n\n\nRollingPlay <- function (OpenPaper, PriceInfo.Avail)\n{\n  \n}\n",
+    "created" : 1458983806667.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1888543323",
+    "id" : "A4742F28",
+    "lastKnownWriteTime" : 1459004961,
+    "last_content_update" : -2147483648,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/08_PolicySimulation.R",
+    "project_path" : "08_PolicySimulation.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

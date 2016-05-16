@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#SetofAnalyzingPrice <- c('DUBAI') 'MOPS_FO380'\n#SetofAnalyzingPrice <- c('WTI','BRENT','DUBAI')\nSetofAnalyzingPrice <- c('WTI','BRENT','DUBAI','MOPS_FO180','MOPS_FO380')\nvalueScale <- c(1,1,1,1/6.5,1/6.5)\n\nsource('0_LoadLibraries.R')\n\nsource('90_CommonUtilFunction.R')\nsource('91_DataManipulationFunction.R')\nsource('92_FwdStructureInfoFunction.R')\n\n#length(SetofAnalyzingPrice)\n\nfor(i in 1:length(SetofAnalyzingPrice))\n{\n  currentPriceId <- SetofAnalyzingPrice[i]\n  \n  spotHistory <- getDataFromDB(currentPriceId,'S')\n  spotHistory$SpotPrice <- valueScale[i] * spotHistory$SpotPrice\n  fwdHistory <- getDataFromDB(currentPriceId,'F')\n  fwdHistory$FwdPrice <- valueScale[i] * fwdHistory$FwdPrice\n  \n  #source('01_DataPreProcess.R')\n  fwdStrBasicInfo <- createFwdDataInfo(spotHistory,fwdHistory,currentPriceId)\n  fwdStrBasicInfo.MonthAvg <- createFwdDataInfo.MAvg(fwdStrBasicInfo)\n  \n  #source('02_FwdStrDataGen.R')\n  fwdStrBasicInfo <- createFwdStrInfo(fwdStrBasicInfo)\n  fwdStrCalInfo.MAvg <- createFwdStrInfo(fwdStrBasicInfo.MonthAvg)\n  \n  #source('03_StructureAnalysis.R')\n  curveChangeAnaylsis.summary <- createCorrelation(fwdStrBasicInfo,'2008-03-01', wid = 40, freq = 3)\n  slopeTrend.Analy <- createSlopeAnalysis(fwdStrBasicInfo, '2008-03-01', breakPoint = breakPoint)\n  \n  writeResult(currentPriceId,fwdStrCalInfo.MAvg, fwdStrBasicInfo,curveChangeAnaylsis.summary,slopeTrend.Analy)\n}\n",
+    "created" : 1462802316587.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "933360153",
+    "id" : "EDB513E0",
+    "lastKnownWriteTime" : 1463124029,
+    "last_content_update" : -2147483648,
+    "path" : "D:/My_Workplace/Project/SKTIStudy/FwdStructureAnaly/FwdAnalysisModel/BatchProcessOfFwdStrAnalysis.R",
+    "project_path" : "BatchProcessOfFwdStrAnalysis.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 23,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
